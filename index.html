@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vintage Barbershop</title>
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+
+    <!-- ===== Header / Navbar ===== -->
+    <header class="site-header">
+        <div class="container header-inner">
+            <a href="#" class="logo" id="logo"><img src="assets/images/logo.png" alt="" class="logo-img">Vintage Barbershop</a>
+            <nav class="nav" id="nav">
+                <a href="#features" class="nav-link">Services</a>
+                <a href="#cta" class="nav-link">Book</a>
+                <a href="#footer" class="nav-link">Contact</a>
+            </nav>
+
+            <!-- Mobile Menu Button (for later JS) -->
+             <button class="menu-btn" id="menuBtn" aria-label="Open Menu">☰</button>
+        </div>
+
+        <!-- Mobile Menu Panel (for later JS) -->
+        <div class="mobile-menu" id="mobileMenu">
+            <a href="#features" class="mobile-link">Services</a>
+            <a href="#cta" class="mobile-link">Book</a>
+            <a href="#footer" class="mobile-link">Contact</a>
+            <!-- These <a> tags will be the nav links for the mobile menu based on screen size. The JS will cause the class(mobile-menu) we have for mobile screens to take over styling -->
+        </div>
+    </header>
+
+    <!-- ===== Hero Section ===== -->
+    <section class="hero" id="hero">
+        <div class="container hero-inner">
+            <div class="hero-text">
+                <h1 id="heroHeading">Classic Cuts. Clean Shaves. Vintage Style.</h1>
+                <p id="heroSubtext">
+                    Experience the tradition of a true barbershop- precision fades, straight-razor shaves, and a welcoming atmosphere.
+                </p>
+                <div class="hero-actions">
+                    <a href="#cta" class="btn btn-primary" id="bookBtn">Book an Appointment</a>
+                    <a href="#features" class="btn btn-secondary" id="servicesBtn">View Services</a>
+                </div>
+            </div>
+            <div class="hero-media">
+                <img src="assets/images/hero.jpg" alt="Barbershop hero" class="hero-img" id="heroImg"/>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== Features / Services Section ===== -->
+     <section class="features" id="features">
+        <div class="container">
+            <h2 class="section-title" id="featuresTitle">Services</h2>
+            <p class="section-subtitle" id="featuresSubtitle">
+                Quality grooming services designed for comfort, style, and confidence.
+            </p>
+            <div class="feature-grid" id="featureGrid">
+
+                <!-- Feature Card 1 -->
+                <article class="feature-card">
+                    <img src="assets/images/feature-1.jpg" alt="Classic haircut" class="feature-img"/>
+                    <h3 class="feature-title">Classic Haircut</h3>
+                    <p class="feature-text">
+                        Timeless cuts with modern precision-tailored to your style.
+                    </p>
+                 </article>
+
+                <!-- Feature Card 2 -->
+                <article class="feature-card">
+                    <img src="assets/images/feature-2.jpg" alt="Beard trim" class="feature-img"/>
+                    <h3 class="feature-title">Beard Trim</h3>
+                    <p class="feature-text">
+                        Shape, line-up, and refine your beard for a clean finish.
+                    </p>
+                </article>
+
+                <!-- Feature Card 3 -->
+                <article class="feature-card">
+                    <img src="assets/images/feature-3.jpg" alt="Straight razor shave" class="feature-img"/>
+                    <h3 class="feature-title">Straight Razor Shave</h3>
+                    <p class="feature-text">
+                        Hot towel, smooth shave, and classic barbershop experience.
+                    </p>
+                </article>
+            </div>
+        </div>
+     </section>
+</body>
+</html>
