@@ -1,0 +1,175 @@
+/* =========================
+Vintage Barbershop Theme
+File: css/styles.css
+========================= */
+/* ---- CSS Variables (Vintage Palette) ---- */
+:root {
+    --color-bg-primary: #f4efea; /* Cream */
+    --color-bg-dark: #3a2d28; /* Dark Brown */
+    --color-accent: #b22222; /* Barber Red */
+    --color-text-dark: #1f1f1f; /* Deep Brown/Black */
+    --color-beige: #d8c3a5; /* Beige */
+    --color-text-light: #ffffff; /* White */
+    --radius: 14px;
+    --shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
+    --max-width: 1100px;
+}
+/* ---- Base Reset ---- */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+html {
+    scroll-behavior: smooth;
+}
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: var(--color-bg-primary);
+    color: var(--color-text-dark);
+    line-height: 1.6;
+}
+/* ---- Layout Helpers ---- */
+.container {
+    width: 92%;
+    max-width: var(--max-width);
+    margin: 0 auto;
+}
+/* ---- Header / Navbar ---- */
+.site-header {
+    background-color: var(--color-bg-dark);
+    color: var(--color-text-light);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+}
+.header-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 0;
+    gap: 16px;
+}
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--color-text-light);
+    text-decoration: none;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+}
+.logo-img {
+    height: 100px;
+    width: auto;
+    object-fit: contain;
+}
+.nav {
+    display: flex;
+    gap: 18px;
+}
+.nav-link {
+    color: var(--color-beige);
+    text-decoration: none;
+    font-weight: 600;
+    padding: 8px 10px;
+    border-radius: 10px;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+.nav-link:hover {
+    background-color: rgba(216, 195, 165, 0.12);
+    color: var(--color-text-light);
+}
+/* Mobile button hidden on desktop */
+.menu-btn {
+    display: none;
+    border: 2px solid rgba(255, 255, 255, 0.25);
+    background: transparent;
+    color: var(--color-text-light);
+    padding: 8px 12px;
+    border-radius: 12px;
+    cursor: pointer;
+}
+/* Mobile menu hidden by default */
+.mobile-menu {
+    display: none;
+    background-color: #2f241f;
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
+}
+.mobile.link {
+    display: block;
+    padding: 12px 4%;
+    color: var(--color-beige);
+    text-decoration: none;
+    font-weight: 600;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+.mobile-link:hover {
+    background-color: rgba(216, 195, 165, 0.10);
+    color: var(--color-text-light);
+}
+/* ---- Buttons ---- */
+.btn {
+    display: inline-block;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    font-weight: 700;
+    padding: 12px 16px;
+    border-radius: 12px;
+    transition: transform 0.08s ease, opacity 0.2s ease, background-color 0.2s ease, color 0.2s ease;
+}
+.btn:active {
+    transform: translateY(1px); /* The active pseudo-class applies a style to an element when it is activated. Commonly used on buttons and links */
+} /* The combination of :active and transform: translateY(1px) makes the button drop 1px so it looks like a real button being pressed */
+.btn-primary {
+    background-color:  var(--color-accent);
+    color: var(--color-text-light);
+}
+.btn-primary:hover {
+    opacity: 0.92;
+}
+.btn-secondary {
+    background-color: transparent;
+    color: var(--color-bg-dark);
+    border: 2px solid var(--color-bg-dark);
+}
+.hero .btn-secondary,
+.cta .btn-secondary {
+    color: var(--color-text-light);
+    border-color: rgba(255, 255, 255, 0.65);
+}
+.btn-secondary:hover {
+    background-color: rgba(58, 45, 40, 0.08);
+}
+.hero .btn-secondary:hover,
+.cta .btn-secondary:hover {
+    background-color: rgba(255, 255, 255, 0.12);
+}
+/* ---- Hero ---- */
+.hero {
+    background-color: var(--color-bg-dark);
+    color: var(--color-text-light);
+    padding: 56px 0;
+}
+.hero-inner {
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 28px;
+    align-items: center;
+}
+.hero-text h1 {
+    font-size: clamp(28px, 4vw, 44px); /* The clamp() CSS function limits a value between an upper and lower limit. The font size will never go below 28px and never above 44px. The ideal size for the text will be 4vw(viewport width) which is 4% of the viewport width. */
+    line-height: 1.15;
+    margin-bottom: 14px;
+}
+.hero-text p {
+    color: var(--color-beige);
+    max-width: 56ch; /* The max-width is set to 56 characters to maintain a readable line length. The character height is measured using the 0 "zero" character; so 56 zeros wide. */
+    margin-bottom: 18px;
+}
+.hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+}
