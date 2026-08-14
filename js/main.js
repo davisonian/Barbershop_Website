@@ -122,3 +122,5 @@ if (callBtn) {
         }
     });
 }
+
+renderFeatures(); // Call the function to render the features on page load
