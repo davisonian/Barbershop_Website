@@ -97,7 +97,7 @@ body {
     background-color: #2f241f;
     border-top: 1px solid rgba(255, 255, 255, 0.12);
 }
-.mobile.link {
+.mobile-link {
     display: block;
     padding: 12px 4%;
     color: var(--color-beige);
