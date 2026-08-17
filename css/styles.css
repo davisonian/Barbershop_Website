@@ -81,6 +81,22 @@ body {
     background-color: rgba(216, 195, 165, 0.12);
     color: var(--color-text-light);
 }
+
+/* ---- Sticky Navbar Visual Change (on scroll) ---- */
+.site-header {
+    transition:
+        padding 0.2s ease,
+        border-radius 0.2s ease,
+        width 0.2s ease,
+        margin 0.2s ease,
+}
+/* When scrolled, we "float" the header with rounded corners and a smaller padding */
+.site-header.is-scrolled {
+    width: calc(100% - 24px); /* Calc stands for calculation. 100% of the parent element minus 24px (12px on each side) */
+    margin: 12px auto 0 auto;
+    border-radius: 18px;
+    padding: 2px 0;
+}
 /* Mobile button hidden on desktop */
 .menu-btn {
     display: none;
