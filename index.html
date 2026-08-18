@@ -106,7 +106,56 @@
         </div>
         <!-- Optional CTA Image (replace with provided asset if you have one) -->
         <!-- <img src="assets/images/cta.jpg" alt="CTA background" class="cta-img"/> -->
+    <!-- ===== Calendar Section ===== -->
+        <div class="container booking-layout">
+            <div class="calendar-card">
+                <div class="calendar-header">
+                    <button class="calendar-nav-btn" id="prevMonthBtn">←</button>
+                    <h3 id="calendarMonthLabel">Month Year</h3>
+                    <button class="calendar-nav-btn" id="nextMonthBtn">→</button>
+                </div>
+                <div class="calendar-weekdays">
+                    <span>Sun</span>
+                    <span>Mon</span>
+                    <span>Tue</span>
+                    <span>Wed</span>
+                    <span>Thu</span>
+                    <span>Fri</span>
+                    <span>Sat</span>
+                </div>
+                <div class="calendar-grid" id="calendarGrid">
+            </div>
+            <div class="booking-panel">
+                <h3 class="booking-panel-title">Book Your Appointment</h3>
+                <p class="selected-date-text">
+                    Selected Date: <span id="selectedDateText">Choose a date</span>
+                </p>
+                <div class="time-slots" id="timeSlots"></div>
+                <form id="bookingForm" class="booking-form">
+                    <div class="form-group">
+                        <label for="customerName">Name</label>
+                        <input type="text" id="customerName" placeholder="Enter your name"/>
+                    </div>
+                    <div class="form-group">
+                        <label for="customerService">Service</label>
+                        <select id="customerService">
+                            <option value="Classic Haircut">Classic Haircut</option>
+                            <option value="Beard Trim">Beard Trim</option>
+                            <option value="Straight Razor Shave">Straight Razor Shave</option>
+                            <option value="Fade & Style">Fade & Style</option>
+                        </select>
+                    </div>
+                    <input type="hidden" id="selectedTimeInput"/>
+                    <button type="submit" class="btn btn-primary booking-submit-btn">
+                        Confirm Booking
+                    </button>
+                    <p id="bookingMessage" class="booking-message"></p>
+                </form>
+            </div>
+        </div>     
     </section>
+
+
 
     <!-- ===== Footer Section ===== -->
      <footer class="site-footer" id="footer">
