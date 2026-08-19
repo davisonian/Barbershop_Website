@@ -116,7 +116,7 @@ const renderNavigation = () => {
 
 // ----- Helpers / Functions -----
 
-const handeHeaderOnScroll = () => {
+const handleHeaderOnScroll = () => {
     if (!siteHeader) return;
     if (window.scrollY > 10) {
         siteHeader.classList.add("is-scrolled");

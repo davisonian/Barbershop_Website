@@ -139,9 +139,157 @@ const renderCalendar = () => {
             currentMonth === today.getMonth() &&
             currentYear === today.getFullYear()
         ) {
-            dayButton.classList.add("is-today");
+            dayButton.classList.add("today"); // gives the current day button a beige outline
         }
-    
-    };
-    
+
+        if (
+            isPastDate(currentYear, currentMonth, day) ||
+            isClosedDay(currentYear, currentMonth, day)
+        ) {
+            dayButton.classList.add("disabled"); // greys out the buttons for past days and Sundays when closed
+        }
+        
+        if (
+            selectedDate &&
+            selectedDate.year === currentYear &&
+            selectedDate.month === currentMonth &&
+            selectedDate.day === day
+        ) {
+            dayButton.classList.add("selected"); // highlights the button for the currently selected date
+        }
+        
+        // The click handler (a closure)
+        dayButton.addEventListener("click", () => {
+            if (isPastDate(currentYear, currentMonth, day)) return; // Guard clause to prevent selecting past dates
+            if (isClosedDay(currentYear, currentMonth, day)) return; // Guard clause to prevent selecting closed days (Sundays)
+            selectedDate = { //fills in the key/value pairs based on the date selected by the user
+                year: currentYear, // 2026
+                month: currentMonth, // August
+                day: day, // 18
+                key: dateKey, // "2026-08-18" format
+            }; // this object is used to store the appointments and prevent double-booking (lines 280-290)
+            selectedTime = "";
+            selectedTimeInput.value = "";
+            selectedDateText.textContent = formatReadableDate( // 0-indexed
+                currentYear, 
+                currentMonth, 
+                day,
+            ); // updates the text above the time slots to show the selected date in a human-readable format
+            renderCalendar(); // re-renders the calendar to update the selected date button's styling
+            renderTimeSlots(); // re-renders the time slots to show the available slots for the newly selected date
+            bookingMessage.textContent = ""; // clears any previous booking messages when a new date is selected
+            bookingMessage.className = "booking-message";
+        });
+        calendarGrid.appendChild(dayButton); // where all buttons are added to the calendar grid
+    }    
 };
+
+// ----- Render Time Slots -----
+const renderTimeSlots = () => { // fills in the time-slot buttons for whatever date the user picked
+    if (!timeSlots) return; // Guard clause to ensure timeSlots and selectedDate are available
+    timeSlots.innerHTML = "";
+    if (!selectedDate) { // catches if the date wasn't selected first, forces date selection before timeslot
+        timeSlots.innerHTML = `<p class="selected-date-text">Choose a date first.</p>`
+        return;
+    }
+    const slots = getSlotsForDate( // passes available hours for the day against date selected by user
+        selectedDate.year,
+        selectedDate.month,
+        selectedDate.day,
+    );
+    const bookedForDay = bookedAppointments[selectedDate.key] || []; // looks up what time are already booked for this specific date. Returns undefined if nothing's been booked yet. Undefined is falsy and we can't return undefined because the.includes() we use with this later in the code would crash, so we use the || operator to substitute for an empty array []; instead.
+    // checks if there are previous bookings for the selected date and if not, returns an empty array
+    if (slots.length === 0) {
+        timeSlots.innerHTML = `<p class="selected-date-text">No appointments available for this date.</p>`; // a redundancy just in case the CSS class(disabled) or JS Guard gets loosened later by another dev (real-world thinking)
+        return; // shows a "no appointments available" message and exits early, skipping the loop that would try to render time slot buttons
+    } // important distinction slots = shop's hours that day (empty on Sundays), bookedForDay = which of those hours are already taken (used later to disable specific buttons for time slots already booked)
+    for (let i = 0; i < slots.length; i++) {
+        const slot = slots[i];
+        const slotBtn = document.createElement("button");
+        slotBtn.type = "button";
+        slotBtn.textContent = slot;
+        slotBtn.className = "time-slot-btn";
+        if (bookedForDay.includes(slot)) {
+            slotBtn.classList.add("disabled");
+            slotBtn.disabled = true;
+            slotBtn.textContent = `{slot} - Booked`;
+        }
+        if (selectedTime === slot) {
+            slotBtn.classList.add("selected");
+        }
+        slotBtn.addEventListener("click", () => {
+            selectedTime = slot;
+            selectedTimeInput.value = slot;
+            renderTimeSlots();
+        });
+        timeSlots.appendChild(slotBtn);
+    }
+};   
+
+// ----- Month Navigation -----
+if (prevMonthBtn) {
+    prevMonthBtn.addEventListener("click", () => {
+        currentMonth--; // decrements the month by 1 on click
+        if (currentMonth < 0) { // handles year boundary
+            currentMonth = 11; // if month is Jan(0) and is decremented it doesn't go to -1 but 11 (Dec)
+            currentYear--; // decrements the year by 1    
+        }
+        renderCalendar(); // re-runs renderCalendar() 
+    });
+}
+if (nextMonthBtn) {
+    nextMonthBtn.addEventListener("click", () => {
+        currentMonth++;
+        if (currentMonth > 11) { 
+            currentMonth = 0; 
+            currentYear++;    
+        }
+        renderCalendar(); // re-runs renderCalendar() 
+    });
+}
+
+// ----- Booking Submit -----
+if (bookingForm) {
+    bookingForm.addEventListener("submit", (event) => {
+        event.preventDefault(); // prevents default behaviors for all events
+        const nameValue = customerName.value.trim(); // trim() strips whitespace around a string (e.g. " Tyler " becomes "Tyler") prevents copy and paste spaces from being inclused as part of their name
+        const serviceValue = customerService.value;
+        const timeValue = selectedTimeInput.value;
+        if (
+            nameValue === "" ||
+            serviceValue === "" ||
+            !selectedDate ||
+            timeValue === ""
+        ) {
+            bookingMessage.textContent =
+                "Please choose a date, time, name, and service.";
+            bookingMessage.className = "booking-message error"
+            return;
+        }
+        if (!bookedAppointments[selectedDate.key]) { // reads as "if there's no array yet for this date..."
+            bookedAppointments[selectedDate.key] = []; // ... then create one
+        }
+        if (bookedAppointments[selectedDate.key].includes(timeValue)) {
+            bookingMessage.textContent =
+                "That time was just taken. Please choose another.";
+            bookingMessage.className = "booking-message error";
+            renderTimeSlots();
+            return;
+        }
+        bookedAppointments[selectedDate.key].push(timeValue); // push() adds the time selected to the end of the booked appointments array
+        bookingMessage.textContent = `${nameValue}, your ${serviceValue} appointment is booked for ${formatReadableDate(
+            selectedDate.year,
+            selectedDate.month,
+            selectedDate.day,
+        )} at ${timeValue}.`;
+        bookingMessage.className = "booking-message success";
+        bookingForm.reset();
+        selectedTime = "";
+        selectedTimeInput.value = "";
+        renderTimeSlots();
+    });
+}
+
+// ----- App Start -----
+renderCalendar();
+renderTimeSlots();
