@@ -217,6 +217,28 @@
       </div>
     </footer>
 
+    <!-- ===== Service Details Modal ===== -->
+    <div class="service-modal" id="serviceModal" aria-hidden="true">
+        <div class="service-modal-overlay" id="serviceModalOverlay"></div>
+        <div
+            class="service-modal-content"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="serviceModalTitle"
+        >
+            <button
+                class="service-modal-close"
+                id="serviceModalClose"
+                aria-label="Close modal"
+            >
+                x
+            </button>
+            <h3 id="serviceModalTitle">Service Details</h3>
+            <p id="serviceModalPrice" class="service-modal-price"></p>
+            <ul id="serviceModalList" class="service-modal-list"></ul>
+        </div>
+    </div>
+
     <!-- JS -->
     <script src="js/main.js"></script>
     <!-- The script tag is placed at the bottom of the screen so all elements and id's that will be used in the functions are read by the browser's engine so JS can be used immediately -->
